@@ -27,7 +27,7 @@ class ContactSerializer(serializers.ModelSerializer):
             "id",
             "salutation",
             "test_name",
-            "contact_first_name",
+            "first_name",
             "category",
             "last_name",
             "date_of_birth",
@@ -88,7 +88,7 @@ class CreateContactSerializer(serializers.ModelSerializer):
         fields = (
             "test_name",
             "salutation",
-            "contact_first_name",
+            "first_name",
             "category",
             "last_name",
             "organization",

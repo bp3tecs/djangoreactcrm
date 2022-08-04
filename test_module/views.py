@@ -14,7 +14,7 @@ from test_module import swagger_params
 from test_module.serializer import *
 from rest_framework.views import APIView
 from test_module.tasks_NU import send_email_to_assigned_user
-
+from contacts.models import Contact
 import json
 
 
@@ -31,6 +31,7 @@ class Test_moduleListView(APIView, LimitOffsetPagination):
             if len(self.request.data) == 0
             else self.request.data
         )
+        print(params)
         queryset = self.model.objects.filter(
             org=self.request.org).order_by("-id")
        # if self.request.profile.role != "ADMIN" and not self.request.profile.is_admin:
@@ -60,6 +61,17 @@ class Test_moduleListView(APIView, LimitOffsetPagination):
                 "offset": offset
             }
         )
+        if params.get("contact"):
+                assinged_to_list = json.load(
+                    params.get("contact"))
+                contacts = Contact.objects.filter(
+                    id__in=assinged_to_list,org=self.request.org)
+                #lead_obj.assigned_to.add(*contacts)
+        contacts = Contact.objects.filter(org=self.request.org).values(
+            "id",
+                  "first_name"
+        )
+        #print('connnn'+contacts)
         context["test_module_obj_list"] = test_module
        
         context["per_page"] = params.get("per_page")
@@ -74,4 +86,39 @@ class Test_moduleListView(APIView, LimitOffsetPagination):
         context = self.get_context_data(**kwargs)
         return Response(context)
 
+    @swagger_auto_schema(
+        tags=["Test_module"], manual_parameters=swagger_params.test_module_create_post_params
+    )
     
+    def post(self, request, *args, **kwargs):
+        params = request.query_params if len(
+            request.data) == 0 else request.data
+        test_module_serializer = CreateTest_moduleSerializer(
+            data=params, request_obj=request
+        )
+        
+
+        data = {}
+        if not test_module_serializer.is_valid():
+            data["testmodule_errors"] = test_module_serializer.errors
+       
+        if data:
+            return Response(
+                {"error": True, "errors": data},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+       
+        test_module_obj = test_module_serializer.save(
+           
+        )
+       
+        test_module_obj.org = request.org
+        test_module_obj.save()
+
+        
+
+       
+        return Response(
+            {"error": False, "message": "Testmodule created Successfuly"},
+            status=status.HTTP_200_OK,
+        )

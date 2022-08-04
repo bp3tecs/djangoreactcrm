@@ -6,6 +6,7 @@ import Contacts from './Contacts'
 import Users from './Users'
 import Profiles from './Profiles'
 import Accounts from './Accounts'
+import Test_module from './Test_module'
 
 export default function* rootSaga(getState) {
   yield all([
@@ -16,6 +17,7 @@ export default function* rootSaga(getState) {
     Users(),
     Profiles(),
     Accounts(),
+    Test_module(),
   ]);
 }
 

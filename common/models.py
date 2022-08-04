@@ -36,7 +36,7 @@ class Address(models.Model):
     postcode = models.CharField(
         _("Post/Zip-code"), max_length=64, blank=True, default=""
     )
-    country = models.CharField(max_length=3, choices=COUNTRIES, blank=True, default="")
+    country = models.CharField(max_length=50, choices=COUNTRIES, blank=True, default="")
 
     def __str__(self):
         return self.city if self.city else ""

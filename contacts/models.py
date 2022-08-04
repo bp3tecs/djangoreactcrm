@@ -10,7 +10,7 @@ from teams.models import Teams
 class Contact(models.Model):
     salutation = models.CharField(_("Salutation"), max_length=255, default="", blank=True)
     
-    contact_first_name = models.CharField(_("First name"), max_length=255) 
+    first_name = models.CharField(_("First name"), max_length=255) 
     category = models.CharField(_("Category"), max_length=255, null=True)
     last_name = models.CharField(_("Last name"), max_length=255)
     date_of_birth = models.DateField(null=True, blank=True)

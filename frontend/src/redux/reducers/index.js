@@ -7,6 +7,8 @@ import Contacts from './Contacts';
 import Companies from './Companies';
 import profiles from './Profiles';
 import Accounts from './Accounts';
+import Test_module from './Test_module';
+
 const reducers = combineReducers({    
     auth: Auth,    
     theme: Theme,
@@ -15,7 +17,8 @@ const reducers = combineReducers({
     contacts: Contacts,
     companies: Companies,
     profiles: profiles,
-    accounts:Accounts
+    accounts:Accounts,
+    test_module:Test_module,
 
 });
 

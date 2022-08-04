@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from test_module.models import Test_module
 from common.serializer import (
     ProfileSerializer,
@@ -7,25 +8,48 @@ from common.serializer import (
     OrganizationSerializer
 )
 from teams.serializer import TeamsSerializer
+from contacts.serializer import ContactSerializer
 
 
 class Test_moduleSerializer(serializers.ModelSerializer):
     
-    date_of_birth = serializers.DateField()
+    #date = serializers.DateField()
     org = OrganizationSerializer()
-
+    contact = ContactSerializer()
     class Meta:
         model = Test_module
         fields = (
             "id",
            
             "name",
-            "date_of_birth",
-            "organization",
-           
+            "mobilenumber",
+            "title",
+            "contact",
+            #"contactname",
             "org"
         )
 
 
+class CreateTest_moduleSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        request_obj = kwargs.pop("request_obj", None)
+        super().__init__(*args, **kwargs)
+        self.org = request_obj.org
+        #date = serializers.DateField()
+        contact = ContactSerializer()
+        org = OrganizationSerializer()
+
+    class Meta:
+        model = Test_module
+        fields = (
+            "name",
+            "mobilenumber",
+            "title",
+    "org",
+
+"contact",    
+#"contactname"
+            
+        )
 
     

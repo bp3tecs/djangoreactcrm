@@ -12,7 +12,7 @@ const Address = (props) => {
         <Form.Item label="Street" name="street" className="street">
           <Input className=""/>
         </Form.Item>
-        <Form.Item label="Pin Code" name="pincode" className="pincode">
+        <Form.Item label="Pin Code" name="postcode" className="pincode">
           <Input className=""/>
         </Form.Item>
       </Col>
@@ -20,12 +20,13 @@ const Address = (props) => {
         <Form.Item label="City" name="city" className="city">
           <Input className=""/>
         </Form.Item>
-        <Form.Item label="State" name="state" className="state">
-          <Input className=""/>
-        </Form.Item>
         <Form.Item label="Country" name="country" className="country">
           <Input className=""/>
         </Form.Item>
+        <Form.Item label="State" name="state" className="state">
+          <Input className=""/>
+        </Form.Item>
+       
       </Col>
     </Row> 
   )

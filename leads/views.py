@@ -125,7 +125,7 @@ class LeadListView(APIView, LimitOffsetPagination):
         }
         contacts = Contact.objects.filter(org=self.request.org).values(
             "id",
-            "contact_first_name"
+                  "first_name"
         )
         context["contacts"] = contacts
         context["status"] = LEAD_STATUS
@@ -200,7 +200,7 @@ class LeadListView(APIView, LimitOffsetPagination):
                 lead_obj.teams.add(*teams)
 
             if params.get("assigned_to"):
-                assinged_to_list = json.loads(
+                assinged_to_list = json.load(
                     params.get("assigned_to"))
                 profiles = Profile.objects.filter(
                     id__in=assinged_to_list, org=request.org)
@@ -235,7 +235,7 @@ class LeadListView(APIView, LimitOffsetPagination):
                     account_object.tags.add(tag)
 
                 if params.get("assigned_to"):
-                    assigned_to_list = json.loads(
+                    assigned_to_list = json.load(
                         params.getlist("assigned_to"))
                     recipients = assigned_to_list
                     send_email_to_assigned_user.delay(
@@ -500,7 +500,7 @@ class LeadDetailView(APIView):
 
             lead_obj.assigned_to.clear()
             if params.get("assigned_to"):
-                assinged_to_list = json.loads(
+                assinged_to_list = json.load(
                     params.get("assigned_to"))
                 profiles = Profile.objects.filter(
                     id__in=assinged_to_list, org=request.org)
@@ -535,7 +535,7 @@ class LeadDetailView(APIView):
                     account_object.tags.add(tag)
                 if params.get("assigned_to"):
                     # account_object.assigned_to.add(*params.getlist('assigned_to'))
-                    assigned_to_list = json.loads(params.get("assigned_to"))
+                    assigned_to_list = json.load(params.get("assigned_to"))
                     recipients = assigned_to_list
                     send_email_to_assigned_user.delay(
                         recipients,
@@ -747,7 +747,7 @@ class CreateLeadFromSite(APIView):
             # Create Contact
             try:
                 contact = Contact.objects.create(
-                    contact_first_name=params.get("title"),
+                            first_name=params.get("title"),
                     email=params.get("email"),
                     phone=params.get("phone"),
                     description=params.get("message"),

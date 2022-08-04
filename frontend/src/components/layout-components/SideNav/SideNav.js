@@ -80,6 +80,14 @@ export const SideNav = (props) => {
             >
               Users
           </Menu.Item>
+          <Menu.Item 
+            key='6' 
+            icon={<UsergroupAddOutlined />}            
+            onClick={(e) => updateRoute(e, '/home/test_module')}
+            className={(key == 6) ? `ant-menu-item-selected` : ''}
+            >
+              Test Module
+          </Menu.Item>
         </Menu>
       </Sider>
     </div>     

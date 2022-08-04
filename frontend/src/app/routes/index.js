@@ -7,6 +7,8 @@ import Users from '../users/Users'
 import UserDetails from '../users/UserDetails'
 import AddContact from '../contacts/AddContact'
 import ContactList from '../contacts/ContactsList'
+import Test_modulesList from '../test_module/Test_moduleList'
+import AddTest_modules from '../test_module/AddTest_module'
 import AccountList from '../Organization/AccountsList'
 import AddUser from '../users/AddUser'
 import EditUser from '../users/EditUser'
@@ -40,6 +42,8 @@ const Routes = (props) => {
       <Route exact path='/home/users/:id/details' component={UserDetails}/>
       <Route exact path='/home/contacts/new/' component={AddContact}/>
       <Route exact path='/home/contacts/' component={ContactList}/>
+      <Route exact path='/home/test_module/' component={Test_modulesList}/>
+      <Route exact path='/home/test_module/new' component={AddTest_modules}/>
       <Route exact path='/home/accounts/' component={AccountList}/>
       <Route exact path='/home/companies/new' component={AddOrganization}/>
     </Switch>

@@ -29,7 +29,7 @@ export const AddLead = (props) => {
 
   const { responseMessage, errors, profiles } = props
 
-  
+  console.log('hai'+profiles)
   const currencyList = (
     <Select defaultValue='INR'>
       <Option value='CAD'>CAD</Option>
@@ -160,7 +160,7 @@ export const AddLead = (props) => {
                     </Form.Item>
                     <Form.Item
                       label='Contact Name'
-                      name='contactname'
+                      name='contact'
                     >                    
                       <Input                         
                         addonAfter={<PlusOutlined  onClick={displayContactDrawer} />}
@@ -203,7 +203,7 @@ export const AddLead = (props) => {
                   <Col xs={24} sm={24} md={24} lg={12} xl={11}>
                     <Form.Item
                       label='Address Lane'
-                      name='address_lane'
+                      name='address_line'
                       // rules={rules.addressLane}
                     >
                       <Input className='required' />
@@ -216,7 +216,7 @@ export const AddLead = (props) => {
                     </Form.Item>
                     <Form.Item
                       label='Pincode'
-                      name='pincode'
+                      name='postcode'
                     >
                       <Input />
                     </Form.Item>
@@ -234,6 +234,8 @@ export const AddLead = (props) => {
                     >
                       <Input />
                     </Form.Item>
+                    
+                    
                   </Col>
                 </Row>
               </Panel>

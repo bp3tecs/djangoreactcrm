@@ -154,6 +154,7 @@ export const LeadsList = (props) => {
                               className='leadlist-tag'
                                 >
                               {tag.name}
+                              {'jjjjjjj'}
                                 </Tag>
                               )})
                             }

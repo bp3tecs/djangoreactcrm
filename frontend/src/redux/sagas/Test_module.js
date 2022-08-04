@@ -1,14 +1,13 @@
 import { all, takeEvery, put, fork, call } from 'redux-saga/effects'
-import { ADD_CONTACT, DELETE_CONTACT } from '../constants/Contacts'
-import { GET_CONTACT } from '../constants/Contacts'
+import { ADD_TEST_MODULE, DELETE_TEST_MODULE } from '../constants/Test_module'
+import { GET_TEST_MODULE } from '../constants/Test_module'
 import { service } from '../../service'
-import { responseMessage } from '../actions/Contacts'
-import { setContactsData,   
-   } from '../actions/Contacts'
-export function* getContactsList() {
-  yield takeEvery(GET_CONTACT, function* ({ payload }) {  
-    let { url } = payload 
-    console.log("url"+url)   
+import { responseMessage } from '../actions/Test_module'
+import { setTest_moduleData,   
+   } from '../actions/Test_module'
+export function* getTest_moduleList() {
+  yield takeEvery(GET_TEST_MODULE, function* ({ payload }) {  
+    let { url } = payload    
     try {
       let response = yield call(
         service.get,
@@ -22,10 +21,10 @@ export function* getContactsList() {
         }
       ) 
       
-      console.log("get contact"+response)           
+      console.log("get test_module"+response)           
       if(response.status === 200) {
-        console.log('response'+Object.values(response))
-        yield(put(setContactsData({response: response.data }))) 
+        console.log('response.data'+response.data['data'])
+        yield(put(setTest_moduleData({response: response.data }))) 
 
       }
 
@@ -35,14 +34,14 @@ export function* getContactsList() {
   })
 }
 
-export function* addContact() {  
-  yield takeEvery(ADD_CONTACT, function* ({ payload }) {
+export function* addTest_module() {  
+  yield takeEvery(ADD_TEST_MODULE, function* ({ payload }) {
     console.log('aaaaaaaaaaaaaaa')
     try {
      // console.log("try")
       console.log("bbbb"+(
         service.post,
-        '/api/contacts/',
+        '/api/test_module/',
         payload,
         {
           headers: {
@@ -53,7 +52,7 @@ export function* addContact() {
       ))
       let response = yield call(
         service.post,
-        '/api/contacts/',
+        '/api/test_module/',
         payload,
         {
           headers: {
@@ -62,7 +61,7 @@ export function* addContact() {
           }
         }
       )
-      console.log("addcontact response"+response)
+      console.log("addtest_module response"+response)
       if(!response.data.error) {
         yield(put(responseMessage(true)))
        // yield(put(updateErrors([])))
@@ -77,7 +76,7 @@ export function* addContact() {
         }
         //att= Object.values(error.response.data.errors)
         console.log(error.response.data.errors)
-        //console.log('error'+error.response.data.errors.get('contact_errors'))
+        //console.log('error'+error.response.data.errors.get('test_module_errors'))
       }
       
       console.log('error'+JSON.stringify(error).toString())
@@ -89,13 +88,13 @@ export function* addContact() {
     }
   })
 }
-export function* deleteContact() {  
-  yield takeEvery(DELETE_CONTACT, function* ({ payload }) {    
+export function* deleteTest_module() {  
+  yield takeEvery(DELETE_TEST_MODULE, function* ({ payload }) {    
     let { id, bool} = payload
     try {
       let response = yield call(
         service.delete,
-        `/api/contacts/${id}/`,        
+        `/api/test_module/${id}/`,        
         {
           headers: {
             'Authorization': `jwt ${localStorage.getItem('Token')}`,
@@ -114,8 +113,8 @@ export function* deleteContact() {
 }
 export default function* rootSaga() {
   yield all([
-    fork(getContactsList),
-    fork(addContact),
-    fork(deleteContact)
+    fork(getTest_moduleList),
+    fork(addTest_module),
+    fork(deleteTest_module)
   ])
 }

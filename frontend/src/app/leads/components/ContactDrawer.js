@@ -73,8 +73,8 @@ export const ContactDrawer = (props) => {
           </Col>
           <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <Form.Item
-                label='Contact First Name'
-                name='contact_first_name'
+                label='First Name'
+                name='first_name'
                 rules={rules.firstName}
               >
                 <Input className='required'/>

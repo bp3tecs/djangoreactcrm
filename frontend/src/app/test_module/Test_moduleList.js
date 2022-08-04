@@ -15,23 +15,23 @@ import { DeleteOutlined,
 import  {getLeads} from '../../redux/actions/Leads' 
 
 import { 
-        getContact,
+        getTest_module,
         loading,
          
         refresh,
          responseMessage 
-        } from '../../redux/actions/Contacts'
-import { deleteContact } from '../../redux/actions/Contacts'
+        } from '../../redux/actions/Test_module'
+import { deleteTest_module } from '../../redux/actions/Test_module'
 
 import { momentTimeFormats } from '../../Utilities'
-import './contacts.css'
+import './test_module.css'
 import { service } from '../../service'
 const { TabPane } = Tabs
 
-export const contactsList = (props) => {    
+export const test_moduleList = (props) => {    
   
-  const { contactsData, refresh } = props
-      
+  const { test_moduleData, refresh } = props
+  console.log(props)
       //sconsole.log(props)
   const [key, setKey] = useState(1)  
   const [isList, setIsList] = useState(true)
@@ -43,37 +43,37 @@ export const contactsList = (props) => {
   
 
   useEffect(() => {              
-    props.getContact('/api/contacts/')
+    props.getTest_module('/api/test_module/')
     //props.getLeads('api/leads/', 0)
     //console.log(props)
-    console.log('Contacts in use Effect') 
-    console.log(contactsData)
+    console.log('Test_modules in use Effect') 
+    console.log(test_moduleData)
   }, [])
-  console.log('Contacts in use Effect After')   
-  console.log(contactsData)   
+  console.log('Test_modules in use Effect After')   
+  console.log(test_moduleData)   
   
           
 
-  const contactDelete = (id) => { 
+  const test_moduleDelete = (id) => { 
     console.log('delete')       
-    props.deleteContact(id,!refresh)
-    alert("Contact Deleted Successfully")
-    props.getContact('/api/contacts/')
+    props.deleteTest_module(id,!refresh)
+    alert("Test_module Deleted Successfully")
+    props.getTest_module('/api/test_module/')
   }
 
   return (    
-    <div className='contactslist'>
-    <div className='contacts-toolbar'>
-      <div className='contacts-toolbar-functions-wrapper'>
+    <div className='test_modulelist'>
+    <div className='test_module-toolbar'>
+      <div className='test_module-toolbar-functions-wrapper'>
         
         <FilterOutlined />
-        <span className='contacts-toolbar-pagination'>
+        <span className='test_module-toolbar-pagination'>
           <LeftOutlined />
-          <span className='contacts-toolbar-pagination-numbers'>
+          <span className='test_module-toolbar-pagination-numbers'>
             {
               (key == 1)
-              ? `${openPage} of ${Math.ceil((contactsData?.open_contacts?.contacts_count)/contactsData?.per_page)}`
-              : `${closePage} of ${Math.ceil((contactsData?.close_contacts?.contacts_count)/contactsData?.per_page)}`
+              ? `${openPage} of ${Math.ceil((test_moduleData?.open_test_module?.test_module_count)/test_moduleData?.per_page)}`
+              : `${closePage} of ${Math.ceil((test_moduleData?.close_test_module?.test_module_count)/test_moduleData?.per_page)}`
             }
           </span>
           <RightOutlined  />
@@ -83,7 +83,7 @@ export const contactsList = (props) => {
           className='btn text-white fw-12 fw-6'
         >
           <PlusOutlined />
-          <span onClick={() =>  props.history.push('/home/contacts/new')}>Add contact</span>
+          <span onClick={() =>  props.history.push('/home/test_module/new')}>Add test_module</span>
         </Button>        
       </div>
     </div>   
@@ -95,27 +95,32 @@ export const contactsList = (props) => {
           <TabPane tab='Open' key='1'>  
           <div className='list-table-scroller'>
             <List
-                dataSource={contactsData?.contact_obj_list}
+                dataSource={test_moduleData?.test_module_obj_list}
                 renderItem={
                   item => (
                     <List.Item>
                       <Row gutter={16} justify='space-between' align='bottom' style={{width: '100vw'}}>
                         <Col xs={24} sm={24} md={24} lg={16} xl={16}>                    
-                          <p className='contactslist-listitem-title'>{item.first_name}</p>
-                          <p className='contactslist-listitem-info'>
-                            {item.last_name}
+                          <p className='test_modulelist-listitem-title'>{item.name}</p>
+                          <p className='test_modulelist-listitem-info'>
+                            {item.mobilenumber}
+                            
+                               
+                          </p>
+                          <p className='test_modulelist-listitem-info'>
+                            {item.title}
+                            
+                               
+                          </p>
+                          <p className='test_modulelist-listitem-info'>
+                            {item.contact.first_name}
                             
                                
                           </p>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={8} xl={8}>                          
-                          <div className='contactslist-listitem-info-two'>
-                            <p className='contactslist-listitem-delete'><DeleteOutlined onClick={() => contactDelete(item.id)}/></p>
-                            <p className='contactslist-listitem-createdby'>                        
-                              <span>Created {momentTimeFormats(item.created_on)[0]} by </span>
-                              <span><Avatar src={item.created_by.user_details.profile_pic}></Avatar></span>
-                              <span className='text-capitalize'>{item.created_by.user_details.first_name}</span>                              
-                            </p>
+                          <div className='test_modulelist-listitem-info-two'>
+                            
                             </div>
                         </Col>              
                     </Row>                
@@ -127,24 +132,24 @@ export const contactsList = (props) => {
           </TabPane>
           <TabPane tab='Close' key='2'>
           <List
-                dataSource={contactsData?.close_contacts?.close_contacts}
+                dataSource={test_moduleData?.close_test_module?.close_test_module}
                 renderItem={
                   item => (
                     <List.Item>
                       <Row gutter={16} justify='space-between' align='bottom' style={{width: '100vw'}}>
                         <Col xs={24} sm={24} md={24} lg={16} xl={16}>                    
-                          <p className='contactslist-listitem-title'>{item.title}</p>
-                          <p className='contactslist-listitem-info'>
+                          <p className='test_modulelist-listitem-title'>{item.title}</p>
+                          <p className='test_modulelist-listitem-info'>
                             {item.country ? item.country : 'N/A '} 
-                            - Source <b className='contactslist-listitem-info-source text-capitalize'>{item.source ? item.source: 'N/A' } </b>
-                            - Status <b className='contactslist-listitem-info-status text-capitalize'>{item.status ? item.status: 'N/A' } </b>
-                            <span className='contactlist-tags-wrapper'>
+                            - Source <b className='test_modulelist-listitem-info-source text-capitalize'>{item.source ? item.source: 'N/A' } </b>
+                            - Status <b className='test_modulelist-listitem-info-status text-capitalize'>{item.status ? item.status: 'N/A' } </b>
+                            <span className='test_modulelist-tags-wrapper'>
                             {
                               item.tags.map((tag,i) => {                          
                                 return (
                                 <Tag
                               color={colors[Math.floor(Math.random()*4)]} 
-                              className='contactlist-tag'
+                              className='test_modulelist-tag'
                                 >
                               {tag.name}
                                 </Tag>
@@ -171,8 +176,8 @@ export const contactsList = (props) => {
                         <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                           <Row justify="start" align="bottom">
                             <Col>
-                              <p className='contactslist-listitem-delete'><DeleteOutlined /></p>
-                              <p className='contactslist-listitem-createdby'>                        
+                              <p className='test_modulelist-listitem-delete'><DeleteOutlined /></p>
+                              <p className='test_modulelist-listitem-createdby'>                        
                                 <span>Created {momentTimeFormats(item.created_on)[0]} by </span>
                                 <span><Avatar src={item.created_by.user_details.profile_pic}></Avatar></span>
                                 <span className='text-capitalize'>{item.created_by.user_details.first_name}</span>
@@ -199,26 +204,26 @@ export const contactsList = (props) => {
 const mapStateToProps = (state) => {
   const { 
 
-    isLoading, 
-    contactsData, 
+    //isLoading, 
+    test_moduleData, 
     //openOffset, closeOffset, 
     refresh 
-  } = state.contacts
+  } = state.test_module
   return { 
-    isLoading,
-     contactsData,
+    //isLoading,
+     test_moduleData,
      // openOffset, closeOffset, 
      refresh
      }
 }
 
 const mapDispatchToProps = {
-  getContact,
-  loading,
-  deleteContact,
+  getTest_module,
+  //loading,
+  deleteTest_module,
   refresh,
   responseMessage  
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(contactsList)
+export default connect(mapStateToProps, mapDispatchToProps)(test_moduleList)
 //
