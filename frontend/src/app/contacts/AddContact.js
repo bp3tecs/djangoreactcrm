@@ -115,7 +115,7 @@ export const AddContact = (props) => {
                      <Select>
                        <Option value="deptone">Department One</Option>
                        <Option value="depttwo">Department Two</Option>
-                       <Option value="deptthree">Department  Three</Option>
+                       <Option value="deptthree">Department</Option>
                      </Select>
                    </Form.Item>
                    
